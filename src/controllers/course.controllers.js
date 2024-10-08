@@ -22,6 +22,10 @@ const getCourses = asyncHandler(async (req, res) => {
       select: "name",
     })
     .populate({
+      path: "category",
+      select: "name",
+    })
+    .populate({
       path: "createdBy",
       select: "name email profile phoneNumber",
     })
@@ -40,11 +44,11 @@ const getCourses = asyncHandler(async (req, res) => {
 });
 
 const createCourse = asyncHandler(async (req, res) => {
-  const { name, category, duration, description, outline, countryIds, cityIds, campusIds } = req.body;
+  const { name, categoryId, duration, description, outline, countryIds, cityIds, campusIds } = req.body;
 
-  console.log(name, category, duration, description, outline, countryIds, cityIds, campusIds);
+  console.log(name, categoryId, duration, description, outline, countryIds, cityIds, campusIds);
 
-  if (!name || !category || !duration || !description || !outline || !countryIds || !cityIds || !campusIds) {
+  if (!name || !categoryId || !duration || !description || !outline || !countryIds || !cityIds || !campusIds) {
     throw new apiError(400, "All fields are required");
   }
 
@@ -62,7 +66,7 @@ const createCourse = asyncHandler(async (req, res) => {
 
   const newCourse = new Course({
     name,
-    category,
+    category: categoryId,
     duration,
     description,  
     outline,
@@ -89,6 +93,10 @@ const createCourse = asyncHandler(async (req, res) => {
       select: "name"
     })
     .populate({
+      path: "category",
+      select: "name",
+    })
+    .populate({
       path: "createdBy",
       select: "name email profile phoneNumber",
     })
@@ -102,11 +110,11 @@ const createCourse = asyncHandler(async (req, res) => {
 
 const updateCourseDetails = asyncHandler(async (req, res) => {
   const { courseId } = req.params;
-  const { name, category, duration, description, outline, countryIds, cityIds, campusIds } = req.body;
-  console.log(name, category, duration, description, outline, countryIds, cityIds, campusIds);
+  const { name, categoryId, duration, description, outline, countryIds, cityIds, campusIds } = req.body;
+  console.log(name, categoryId, duration, description, outline, countryIds, cityIds, campusIds);
   
 
-  if (!name || !category || !duration || !description || !outline || !countryIds || !cityIds || !campusIds) {
+  if (!name || !categoryId || !duration || !description || !outline || !countryIds || !cityIds || !campusIds) {
     throw new apiError(400, "All fields are required");
   }
 
@@ -115,7 +123,7 @@ const updateCourseDetails = asyncHandler(async (req, res) => {
     {
       $set: {
         name,
-        category,
+        category: categoryId,
         duration,
         description,
         outline,
@@ -139,6 +147,10 @@ const updateCourseDetails = asyncHandler(async (req, res) => {
     })
     .populate({
       path: "campuses",
+      select: "name",
+    })
+    .populate({
+      path: "category",
       select: "name",
     })
     .populate({
@@ -204,6 +216,10 @@ const updateCoursePicture = asyncHandler(async (req, res) => {
     })
     .populate({
       path: "campuses",
+      select: "name",
+    })
+    .populate({
+      path: "category",
       select: "name",
     })
     .populate({

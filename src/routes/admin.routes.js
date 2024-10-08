@@ -64,6 +64,12 @@ import {
   updateStaffMemberDetails,
   deleteStaffMember,
 } from "../controllers/staff.member.controllers.js";
+import { 
+  getCategories, 
+  createCategory, 
+  updateCategory, 
+  deleteCategory 
+} from "../controllers/category.controllers.js";
 import {
   getCourses,
   createCourse,
@@ -143,7 +149,10 @@ router.route("/updateStaffMemberDetails/:staffMemberId").put(verifyAdminJWT, upd
 router.route("/deleteStaffMember/:staffMemberId").delete(verifyAdminJWT, deleteStaffMember);
 
 //! 9- Category Operations
-
+router.route("/getCategories").get(verifyAdminJWT, getCategories);
+router.route("/createCategory").post(verifyAdminJWT, createCategory);
+router.route("/updateCategory/:categoryId").put(verifyAdminJWT, updateCategory);
+router.route("/deleteCategory/:categoryId").delete(verifyAdminJWT, deleteCategory);
 
 //! 10- Courses Section Operations
 router.route("/getCourses").get(verifyAdminJWT, getCourses);
@@ -171,6 +180,9 @@ router.route("/deleteCourse/:courseId").delete(verifyAdminJWT, deleteCourse);
 
 
 //! 17- Contact Section Operations
+
+
+//! 18- Current Course Operations
 
 
 export default router;
