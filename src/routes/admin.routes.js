@@ -64,6 +64,13 @@ import {
   updateStaffMemberDetails,
   deleteStaffMember,
 } from "../controllers/staff.member.controllers.js";
+import {
+  getCourses,
+  createCourse,
+  updateCourseDetails,
+  updateCoursePicture,
+  deleteCourse,
+} from "../controllers/course.controllers.js";
 
 const router = Router();
 
@@ -135,28 +142,35 @@ router.route("/updateStaffMemberPicture/:staffMemberId").put(verifyAdminJWT, upl
 router.route("/updateStaffMemberDetails/:staffMemberId").put(verifyAdminJWT, updateStaffMemberDetails);
 router.route("/deleteStaffMember/:staffMemberId").delete(verifyAdminJWT, deleteStaffMember);
 
-//! 9- Courses Section Operations
+//! 9- Category Operations
 
 
-//! 10- Latest News Section Operations
+//! 10- Courses Section Operations
+router.route("/getCourses").get(verifyAdminJWT, getCourses);
+router.route("/createCourse").post(verifyAdminJWT, upload.single("image"), createCourse);
+router.route("/updateCoursePicture/:courseId").put(verifyAdminJWT, upload.single("image"), updateCoursePicture);
+router.route("/updateCourseDetails/:courseId").put(verifyAdminJWT, updateCourseDetails);
+router.route("/deleteCourse/:courseId").delete(verifyAdminJWT, deleteCourse);
+
+//! 11- Latest News Section Operations
 
 
-//! 11- Past News Section Operations
+//! 12- Past News Section Operations
 
 
-//! 12- Chairman Message Section Operations
+//! 13- Chairman Message Section Operations
 
 
-//! 13- Chairman Educational Message Operations
+//! 14- Chairman Educational Message Operations
 
 
-//! 14- Instructors Section Operations
+//! 15- Instructors Section Operations
 
 
-//! 15- Alumni Section Operations
+//! 16- Alumni Section Operations
 
 
-//! 16- Contact Section Operations
+//! 17- Contact Section Operations
 
 
 export default router;

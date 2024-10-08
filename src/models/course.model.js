@@ -10,6 +10,14 @@ const courseSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    category: {
+      type: String,
+      required: true,
+    },
+    description: {
+      type: String,
+      required: true,
+    },
     image: {
       type: String,
       required: true,
@@ -20,31 +28,27 @@ const courseSchema = new mongoose.Schema(
         required: true,
       },
     ],
-    country: [
+    countries: [
       {
-        type:mongoose.Schema.Types.ObjectId,
+        type: mongoose.Schema.Types.ObjectId,
         ref: "Country",
         required: true,
       },
     ],
-    city: [
+    cities: [
       {
-        type:mongoose.Schema.Types.ObjectId,
+        type: mongoose.Schema.Types.ObjectId,
         ref: "City",
         required: true,
       },
     ],
-    campus: [
+    campuses: [
       {
-        type:mongoose.Schema.Types.ObjectId,
+        type: mongoose.Schema.Types.ObjectId,
         ref: "Campus",
         required: true,
       },
     ],
-    description: {
-      type: String,
-      required: true,
-    },
     createdBy: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Admin",
