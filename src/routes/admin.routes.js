@@ -77,6 +77,32 @@ import {
   updateCoursePicture,
   deleteCourse,
 } from "../controllers/course.controllers.js";
+import {
+  getLatestNews,
+  createLatestNews,
+  updateLatestNews,
+  deleteLatestNews,
+} from "../controllers/latest.news.controllers.js";
+import {
+  getPastNews,
+  createPastNews,
+  updatePastNews,
+  deletePastNews,
+} from "../controllers/past.news.controllers.js";
+import {
+  getChairmanMessagePost,
+  createChairmanMessagePost,
+  updateChairmanMessagePostPicture,
+  updateChairmanMessagePostDetails,
+  deleteChairmanMessagePost
+} from "../controllers/chairman.message.controllers.js";
+import {
+  getEducationChairmanMessagePost,
+  createEducationChairmanMessagePost,
+  updateEducationChairmanMessagePostPicture,
+  updateEducationChairmanMessagePostDetails,
+  deleteEducationChairmanMessagePost
+} from "../controllers/education.chairman.message.controllers.js";
 
 const router = Router();
 
@@ -162,27 +188,52 @@ router.route("/updateCourseDetails/:courseId").put(verifyAdminJWT, updateCourseD
 router.route("/deleteCourse/:courseId").delete(verifyAdminJWT, deleteCourse);
 
 //! 11- Latest News Section Operations
-
+router.route("/getLatestNews").get(verifyAdminJWT, getLatestNews);
+router.route("/createLatestNews").post(verifyAdminJWT, createLatestNews);
+router.route("/updateLatestNews/:latestNewsId").put(verifyAdminJWT, updateLatestNews);
+router.route("/deleteLatestNews/:latestNewsId").delete(verifyAdminJWT, deleteLatestNews);
 
 //! 12- Past News Section Operations
+router.route("/getPastNews").get(verifyAdminJWT, getPastNews);
+router.route("/createPastNews").post(verifyAdminJWT, createPastNews);
+router.route("/updatePastNews/:pastNewsId").put(verifyAdminJWT, updatePastNews);
+router.route("/deletePastNews/:pastNewsId").delete(verifyAdminJWT, deletePastNews);
 
+// ? Remaining
 
 //! 13- Chairman Message Section Operations
-
+router.route("/getChairmanMessagePost").get(verifyAdminJWT, getChairmanMessagePost);
+router.route("/createChairmanMessagePost").post(verifyAdminJWT, upload.single("image"), createChairmanMessagePost);
+router.route("/updateChairmanMessagePostPicture/:postId").put(verifyAdminJWT, upload.single("image"), updateChairmanMessagePostPicture);
+router.route("/updateChairmanMessagePostDetails/:postId").put(verifyAdminJWT, updateChairmanMessagePostDetails);
+router.route("/deleteChairmanMessagePost/:postId").delete(verifyAdminJWT, deleteChairmanMessagePost);
 
 //! 14- Chairman Educational Message Operations
-
+router.route("/getEducationChairmanMessagePost").get(verifyAdminJWT, getEducationChairmanMessagePost);
+router.route("/createEducationChairmanMessagePost").post(verifyAdminJWT, upload.single("image"), createEducationChairmanMessagePost);
+router.route("/updateEducationChairmanMessagePostPicture/:postId").put(verifyAdminJWT, upload.single("image"), updateEducationChairmanMessagePostPicture);
+router.route("/updateEducationChairmanMessagePostDetails/:postId").put(verifyAdminJWT, updateEducationChairmanMessagePostDetails);
+router.route("/deleteEducationChairmanMessagePost/:postId").delete(verifyAdminJWT, deleteEducationChairmanMessagePost);
 
 //! 15- Instructors Section Operations
-
+router.route("/getCourses").get(verifyAdminJWT, getCourses);
+router.route("/createCourse").post(verifyAdminJWT, upload.single("image"), createCourse);
+router.route("/updateCoursePicture/:courseId").put(verifyAdminJWT, upload.single("image"), updateCoursePicture);
+router.route("/updateCourseDetails/:courseId").put(verifyAdminJWT, updateCourseDetails);
+router.route("/deleteCourse/:courseId").delete(verifyAdminJWT, deleteCourse);
 
 //! 16- Alumni Section Operations
+router.route("/getCourses").get(verifyAdminJWT, getCourses);
+router.route("/createCourse").post(verifyAdminJWT, upload.single("image"), createCourse);
+router.route("/updateCoursePicture/:courseId").put(verifyAdminJWT, upload.single("image"), updateCoursePicture);
+router.route("/updateCourseDetails/:courseId").put(verifyAdminJWT, updateCourseDetails);
+router.route("/deleteCourse/:courseId").delete(verifyAdminJWT, deleteCourse);
 
-
-//! 17- Contact Section Operations
-
-
-//! 18- Current Course Operations
-
+//! 17- Current Course Operations
+router.route("/getCourses").get(verifyAdminJWT, getCourses);
+router.route("/createCourse").post(verifyAdminJWT, upload.single("image"), createCourse);
+router.route("/updateCoursePicture/:courseId").put(verifyAdminJWT, upload.single("image"), updateCoursePicture);
+router.route("/updateCourseDetails/:courseId").put(verifyAdminJWT, updateCourseDetails);
+router.route("/deleteCourse/:courseId").delete(verifyAdminJWT, deleteCourse);
 
 export default router;
