@@ -103,6 +103,13 @@ import {
   updateEducationChairmanMessagePostDetails,
   deleteEducationChairmanMessagePost
 } from "../controllers/education.chairman.message.controllers.js";
+import {
+  getInstructors,
+  createInstructor,
+  updateInstructorPicture,
+  updateInstructorDetails,
+  deleteInstructor,
+} from "../controllers/instructor.controllers.js"
 
 const router = Router();
 
@@ -199,8 +206,6 @@ router.route("/createPastNews").post(verifyAdminJWT, createPastNews);
 router.route("/updatePastNews/:pastNewsId").put(verifyAdminJWT, updatePastNews);
 router.route("/deletePastNews/:pastNewsId").delete(verifyAdminJWT, deletePastNews);
 
-// ? Remaining
-
 //! 13- Chairman Message Section Operations
 router.route("/getChairmanMessagePost").get(verifyAdminJWT, getChairmanMessagePost);
 router.route("/createChairmanMessagePost").post(verifyAdminJWT, upload.single("image"), createChairmanMessagePost);
@@ -216,11 +221,13 @@ router.route("/updateEducationChairmanMessagePostDetails/:postId").put(verifyAdm
 router.route("/deleteEducationChairmanMessagePost/:postId").delete(verifyAdminJWT, deleteEducationChairmanMessagePost);
 
 //! 15- Instructors Section Operations
-router.route("/getCourses").get(verifyAdminJWT, getCourses);
-router.route("/createCourse").post(verifyAdminJWT, upload.single("image"), createCourse);
-router.route("/updateCoursePicture/:courseId").put(verifyAdminJWT, upload.single("image"), updateCoursePicture);
-router.route("/updateCourseDetails/:courseId").put(verifyAdminJWT, updateCourseDetails);
-router.route("/deleteCourse/:courseId").delete(verifyAdminJWT, deleteCourse);
+router.route("/getInstructors").get(verifyAdminJWT, getInstructors);
+router.route("/createInstructor").post(verifyAdminJWT, upload.single("profile"), createInstructor);
+router.route("/updateInstructorPicture/:instructorId").put(verifyAdminJWT, upload.single("profile"), updateInstructorPicture);
+router.route("/updateInstructorDetails/:instructorId").put(verifyAdminJWT, updateInstructorDetails);
+router.route("/deleteInstructor/:instructorId").delete(verifyAdminJWT, deleteInstructor);
+
+// ? Remaining Routes
 
 //! 16- Alumni Section Operations
 router.route("/getCourses").get(verifyAdminJWT, getCourses);

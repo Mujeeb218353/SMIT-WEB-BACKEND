@@ -7,11 +7,6 @@ import {
   deleteFromCloudinary,
 } from "../utils/cloudinary.js";
 
-const cookieOptions = {
-  httpOnly: true,
-  secure: true,
-};
-
 const getAboutUsSectionPost = asyncHandler(async (req, res) => {
   const aboutUsSectionData = await AboutUs.find()
     .populate({
