@@ -1,14 +1,14 @@
 import { asyncHandler } from "../utils/asyncHandler.js";
 import { apiError } from "../utils/apiError.js";
 import { apiResponse } from "../utils/apiResponse.js";
-import { Instructor } from "../models/instructor.model.js";
+import { Alumni } from "../models/alumni.model.js";
 import {
   uploadOnCloudinary,
   deleteFromCloudinary,
 } from "../utils/cloudinary.js";
 
-const getInstructors = asyncHandler(async (req, res) => {
-  const instructorData = await Instructor.find()
+const getAlumni = asyncHandler(async (req, res) => {
+  const alumniData = await Alumni.find()
     .populate({
       path: "createdBy",
       select: "name email profile phoneNumber",
@@ -18,16 +18,16 @@ const getInstructors = asyncHandler(async (req, res) => {
       select: "name email profile phoneNumber",
     });
 
-  if (!instructorData) {
+  if (!alumniData) {
     throw new apiError(404, "Data not found");
   }
 
   res
     .status(200)
-    .json(new apiResponse(200, instructorData, "Data fetched successfully"));
+    .json(new apiResponse(200, alumniData, "Data fetched successfully"));
 });
 
-const createInstructor = asyncHandler(async (req, res) => {
+const createAlumni = asyncHandler(async (req, res) => {
   const { name, description, designation } = req.body;
 
   if (!name || !description || !designation) {
@@ -46,7 +46,7 @@ const createInstructor = asyncHandler(async (req, res) => {
     throw new apiError(400, "Profile upload failed");
   }
 
-  const newInstructor = await Instructor.create({
+  const newAlumni = await Alumni.create({
     name,
     description,
     designation,
@@ -54,31 +54,27 @@ const createInstructor = asyncHandler(async (req, res) => {
     createdBy: req.admin._id,
   });
 
-  if (!newInstructor) {
-    throw new apiError(400, "Instructor creation failed");
+  if (!newAlumni) {
+    throw new apiError(400, "Alumni creation failed");
   }
 
-  const createdInstructor = await Instructor.findById(
-    newInstructor._id
-  ).populate({
+  const createdAlumni = await Alumni.findById(newAlumni._id).populate({
     path: "createdBy",
     select: "name email profile phoneNumber",
   });
 
   res
     .status(201)
-    .json(
-      new apiResponse(201, createdInstructor, "Instructor created successfully")
-    );
+    .json(new apiResponse(201, createdAlumni, "Alumni created successfully"));
 });
 
-const updateInstructorPicture = asyncHandler(async (req, res) => {
-  const { instructorId } = req.params;
+const updateAlumniPicture = asyncHandler(async (req, res) => {
+  const { alumniId } = req.params;
 
   const profilePath = req.file.path;
 
-  if (!instructorId) {
-    throw new apiError(400, "Instructor not found");
+  if (!alumniId) {
+    throw new apiError(400, "Alumni not found");
   }
 
   if (!profilePath) {
@@ -91,18 +87,18 @@ const updateInstructorPicture = asyncHandler(async (req, res) => {
     throw new apiError(400, "Profile upload failed");
   }
 
-  const previousProfile = await Instructor.findById(instructorId);
+  const previousProfile = await Alumni.findById(alumniId);
 
   if (!previousProfile) {
-    throw new apiError(400, "Instructor not found");
+    throw new apiError(400, "Alumni not found");
   }
 
   if (previousProfile?.profile) {
     await deleteFromCloudinary(previousProfile?.profile);
   }
 
-  const updatedInstructor = await Instructor.findByIdAndUpdate(
-    instructorId,
+  const updatedAlumni = await Alumni.findByIdAndUpdate(
+    alumniId,
     {
       $set: {
         profile: profile.secure_url,
@@ -124,26 +120,24 @@ const updateInstructorPicture = asyncHandler(async (req, res) => {
 
   res
     .status(200)
-    .json(
-      new apiResponse(200, updatedInstructor, "Profile updated successfully")
-    );
+    .json(new apiResponse(200, updatedAlumni, "Profile updated successfully"));
 });
 
-const updateInstructorDetails = asyncHandler(async (req, res) => {
-  const { instructorId } = req.params;
+const updateAlumniDetails = asyncHandler(async (req, res) => {
+  const { alumniId } = req.params;
 
   const { name, description, designation } = req.body;
 
-  if (!instructorId) {
-    throw new apiError(400, "Instructor not found");
+  if (!alumniId) {
+    throw new apiError(400, "Alumni not found");
   }
 
   if (!name || !description || !designation) {
     throw new apiError(400, "All fields are required");
   }
 
-  const updatedInstructor = await Instructor.findByIdAndUpdate(
-    instructorId,
+  const updatedAlumni = await Alumni.findByIdAndUpdate(
+    alumniId,
     {
       $set: {
         name,
@@ -165,45 +159,41 @@ const updateInstructorDetails = asyncHandler(async (req, res) => {
       select: "name email profile phoneNumber",
     });
 
-  if (!updatedInstructor) {
-    throw new apiError(400, "Instructor update failed");
+  if (!updatedAlumni) {
+    throw new apiError(400, "Alumni update failed");
   }
 
   res
     .status(200)
-    .json(
-      new apiResponse(200, updatedInstructor, "Instructor updated successfully")
-    );
+    .json(new apiResponse(200, updatedAlumni, "Alumni updated successfully"));
 });
 
-const deleteInstructor = asyncHandler(async (req, res) => {
-  const { instructorId } = req.params;
+const deleteAlumni = asyncHandler(async (req, res) => {
+  const { alumniId } = req.params;
 
-  if (!instructorId) {
-    throw new apiError(400, "Instructor not found");
+  if (!alumniId) {
+    throw new apiError(400, "Alumni not found");
   }
 
-  const deletedInstructor = await Instructor.findByIdAndDelete(instructorId);
+  const deletedAlumni = await Alumni.findByIdAndDelete(alumniId);
 
-  if (!deletedInstructor) {
-    throw new apiError(400, "Instructor not found");
+  if (!deletedAlumni) {
+    throw new apiError(400, "Alumni not found");
   }
 
-  if (deletedInstructor?.profile) {
-    await deleteFromCloudinary(deletedInstructor?.profile);
+  if (deletedAlumni?.profile) {
+    await deleteFromCloudinary(deletedAlumni?.profile);
   }
 
   res
     .status(200)
-    .json(
-      new apiResponse(200, instructorId, "Instructor deleted successfully")
-    );
+    .json(new apiResponse(200, alumniId, "Alumni deleted successfully"));
 });
 
 export {
-  getInstructors,
-  createInstructor,
-  updateInstructorPicture,
-  updateInstructorDetails,
-  deleteInstructor,
+  getAlumni,
+  createAlumni,
+  updateAlumniPicture,
+  updateAlumniDetails,
+  deleteAlumni,
 };
