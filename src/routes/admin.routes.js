@@ -117,6 +117,12 @@ import {
   updateAlumniDetails,
   deleteAlumni,
 } from "../controllers/alumni.controllers.js";
+import {
+  getCurrentCourses,
+  createCurrentCourse,
+  updateCurrentCourse,
+  deleteCurrentCourse,
+} from "../controllers/current.course.controllers.js";
 
 const router = Router();
 
@@ -241,13 +247,10 @@ router.route("/updateAlumniPicture/:alumniId").put(verifyAdminJWT, upload.single
 router.route("/updateAlumniDetails/:alumniId").put(verifyAdminJWT, updateAlumniDetails);
 router.route("/deleteAlumni/:alumniId").delete(verifyAdminJWT, deleteAlumni); // (5)
 
-// ? Remaining Routes
-
 //! 17- Current Course Operations
-router.route("/getCourses").get(verifyAdminJWT, getCourses);
-router.route("/createCourse").post(verifyAdminJWT, upload.single("image"), createCourse);
-router.route("/updateCoursePicture/:courseId").put(verifyAdminJWT, upload.single("image"), updateCoursePicture);
-router.route("/updateCourseDetails/:courseId").put(verifyAdminJWT, updateCourseDetails);
-router.route("/deleteCourse/:courseId").delete(verifyAdminJWT, deleteCourse); // (5)
+router.route("/getCurrentCourses").get(verifyAdminJWT, getCurrentCourses);
+router.route("/createCurrentCourse").post(verifyAdminJWT, upload.single("image"), createCurrentCourse);
+router.route("/updateCurrentCourse/:currentCourseId").put(verifyAdminJWT, upload.single("image"), updateCurrentCourse);
+router.route("/deleteCurrentCourse/:currentCourseId").delete(verifyAdminJWT, deleteCurrentCourse); // (5)
 
 export default router;
